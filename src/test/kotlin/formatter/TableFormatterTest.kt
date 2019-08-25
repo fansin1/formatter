@@ -19,7 +19,7 @@ class TableFormatterTest {
 
     @Test fun borderlessTest() {
         val expected =
-        "Test   \ttest\ttestet\t\n" +
+                "Test   \ttest\ttestet\t\n" +
                 "ter    \tte  \t\n" +
                 "123.123\t12.0\ttest  \t123\t"
 
@@ -49,5 +49,19 @@ class TableFormatterTest {
     @Test fun emptyAsciiBorderTest() {
         val tableFormatter = TableFormatter.create(AsciiBorderFormatter())
         assertEquals(tableFormatter.format(), "")
+    }
+
+
+    @Test fun unicodeAsciiBorderTest() {
+        val expected =
+            "+-------+----+------+---+\n" +
+                    "|Test   |test|testet|   |\n" +
+                    "+-------+----+------+---+\n" +
+                    "|ter    |te  |      |   |\n" +
+                    "+-------+----+------+---+\n" +
+                    "|123.123|12.0|test  |123|\n" +
+                    "+-------+----+------+---+"
+        val tableFormatter = TableFormatter.create(AsciiBorderFormatter("╔", "═", "║"))
+        formatterTest(tableFormatter, expected)
     }
 }
