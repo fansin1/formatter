@@ -8,21 +8,46 @@ import kotlin.test.assertEquals
 
 class TableFormatterTest {
 
-    @Test
-    fun borderlessTest() {
-
-        val borderLessResult =
-        "Test   \ttest\ttestet\t\n" +
-                "ter    \tte  \t\n" +
-                "123.123\t12.0\ttest  \t123\t"
-
-        val tableFormatter = TableFormatter.create()
+    private fun formatterTest(tableFormatter: TableFormatter, expected: String) {
         tableFormatter.addRow("Test", "test", "testet")
         tableFormatter.addRow("ter", "te")
         tableFormatter.addRow(123, 13, 123)
         tableFormatter.addRow(123.123, 12.0, "test", 123)
         tableFormatter.removeAt(2)
+        assertEquals(expected, tableFormatter.format())
+    }
 
-        assertEquals(tableFormatter.format(), borderLessResult)
+    @Test fun borderlessTest() {
+        val expected =
+        "Test   \ttest\ttestet\t\n" +
+                "ter    \tte  \t\n" +
+                "123.123\t12.0\ttest  \t123\t"
+
+        val tableFormatter = TableFormatter.create()
+        formatterTest(tableFormatter, expected)
+    }
+
+    @Test fun emptyBorderlessTest() {
+        val tableFormatter = TableFormatter.create()
+        assertEquals(tableFormatter.format(), "")
+    }
+
+    @Test fun asciiBorderTest() {
+        val expected =
+                "+-------+----+------+---+\n" +
+                "|Test   |test|testet|   |\n" +
+                "+-------+----+------+---+\n" +
+                "|ter    |te  |      |   |\n" +
+                "+-------+----+------+---+\n" +
+                "|123.123|12.0|test  |123|\n" +
+                "+-------+----+------+---+"
+
+        val tableFormatter = TableFormatter.create(AsciiBorderFormatter())
+        formatterTest(tableFormatter, expected)
+    }
+
+    @Test fun emptyAsciiBorderTest() {
+        val tableFormatter = TableFormatter.create(AsciiBorderFormatter())
+        assertEquals(tableFormatter.format(), "")
     }
 }
