@@ -1,4 +1,4 @@
-package formatter
+package org.fansin.formatter
 
 class TableFormatter(private val borderFormatter: BorderFormatter) {
 

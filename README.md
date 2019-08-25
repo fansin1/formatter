@@ -1,7 +1,7 @@
 # formatter
 Library, that format data to table.
 
-***Sample:***
+####Sample:
 
 ```
 val tableFormatter = TableFormatter.create(AsciiBorderFormatter())
@@ -15,7 +15,7 @@ tableFormatter.removeAt(2)
 print(tableFormatter.format())
 ```
 
-***Result:***
+####Result:
 
 ```
 +-------+----+------+---+
@@ -27,8 +27,12 @@ print(tableFormatter.format())
 +-------+----+------+---+
 ```
 
-Another border formatter is EmptyBorderFormatter. It places ***'\t'*** between columns.
-It can be useful for opening in ***Excel*** or same programs.
+##Another border formatters:
+ 
+####`EmptyBorderFormatter`
+ 
+It places `'\t'` between columns.
+It can be useful for opening in `Excel` or same programs.
 
 ***Result:***
 
@@ -36,4 +40,20 @@ It can be useful for opening in ***Excel*** or same programs.
 Test   	test	testet	
 ter    	te  	
 123.123	12.0	test  	123
+```
+
+####`UnicodeBorderFormatter`
+
+That BorderFormatter using custom `BorderCharacters`
+
+```
+TableFormatter.create(UnicodeBorderFormatter(BorderStyle.DEFAULT.borderCharacters))
+
+╔═══════╤════╤══════╤═══╗
+║Test   │test│testet│   ║
+╠═══════╪════╪══════╪═══╣
+║ter    │te  │      │   ║
+╟───────┼────┼──────┼───╢
+║123.123│12.0│test  │123║
+╚═══════╧════╧══════╧═══╝
 ```
